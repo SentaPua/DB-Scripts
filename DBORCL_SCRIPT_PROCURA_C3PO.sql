@@ -1,9 +1,17 @@
+/* 
+------------------------------------------------------------------------------------------------------------
+AUTOR: Franklin V Nascimento        DATA: 29/03/2010
+------------------------------------------------------------------------------------------------------------
+DESCRIÃ‡ÃƒO: ROTINA QUE VASCULHA O VALOR DESEJADO EM TODOS OS CAMPOS DE TODAS AS TABELAS DE UM SCHEMA 
+------------------------------------------------------------------------------------------------------------
+*/
+
 DECLARE
 
   VOWNER VARCHAR2(30);    -- VAR OWNER
   VDATATYPE VARCHAR2(30); -- VAR DATATYPE DA COLUNA
   VVALOR VARCHAR2(30);    -- VAR VALOR QUE DESEJA-SE ENCONTRAR
-  VSQL VARCHAR2(3000);    -- VAR GERAÇÃO DO SQL
+  VSQL VARCHAR2(3000);    -- VAR GERAÃ‡ÃƒO DO SQL
   VLOC NUMBER;            -- VAR FLAG LOCALIZADO
 
   VTAB VARCHAR2(30);      -- VAR TABELA
@@ -13,7 +21,7 @@ DECLARE
   -- QUE HAJA LUZ! \o/
 
 
-  -- ATRIBUIÇÕES DE PARÂMETROS
+  -- ATRIBUIÃ‡Ã•ES DE PARÃ‚METROS
   VOWNER:= 'PCREP';
   VVALOR:= 'C3PO';
   VDATATYPE:='VARCHAR2';
