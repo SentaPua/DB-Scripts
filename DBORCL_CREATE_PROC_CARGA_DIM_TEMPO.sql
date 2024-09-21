@@ -2,12 +2,12 @@ CREATE OR REPLACE PROCEDURE PROC_CARGA_DIM_TEMPO(DATA_INICIAL IN DATE, DATA_FINA
 /* ------------------------------------------------------------------------------------------------
 AUTOR: FRANKLIN NASCIMENTO                 DATA: 19/05/2011
 ------------------------------------------------------------------------------------------------
-DESCRIÇÃO: PROCEDURE QUE CARREGA TABELA DE DIMENSÃO TEMPO PARA FINS DE DATA WHAREHOUSE
-           INSERE DATA INFORMADA NO PARÂMETRO INICIAL ATÉ DATA FINAL INCLUSIVE
-           CASO EXISTA REGISTROS A DATA_INICIAL É DESCONCIDERADA E UTILIZA-SE A ULTIMA DATA REGISTRADA.
-           CASO SEJA INSERIDA UMA DATA_FINAL MENOR QUE A DATA_INICIAL NENHUM REGISTRO É INSERIDO,
+DESCRIÃ‡ÃƒO: PROCEDURE QUE CARREGA TABELA DE DIMENSï¿½O TEMPO PARA FINS DE DATA WHAREHOUSE
+           INSERE DATA INFORMADA NO PARï¿½METRO INICIAL ATï¿½ DATA FINAL INCLUSIVE
+           CASO EXISTA REGISTROS A DATA_INICIAL ï¿½ DESCONCIDERADA E UTILIZA-SE A ULTIMA DATA REGISTRADA.
+           CASO SEJA INSERIDA UMA DATA_FINAL MENOR QUE A DATA_INICIAL NENHUM REGISTRO ï¿½ INSERIDO,
            ASSIM COMO A DATA FINAL SEJA MENOR QUE A ULTIMA DATA REGISTRADA
-           DÚVIDAS, SUGESTÕES: franklinv@gmail.com
+           Dï¿½VIDAS, SUGESTï¿½ES: franklinv@gmail.com
 ------------------------------------------------------------------------------------------------
 */
 ULTIMA_DATA   DATE;
@@ -21,12 +21,12 @@ BEGIN
   SELECT MAX(DT_DATA) INTO ULTIMA_DATA FROM TD_TEMPO; /* RETORNA A ULTIMA DATA EXISTENTE NA TABELA */
   
   IF ULTIMA_DATA IS NULL THEN
-    DATA_CORRENTE := DATA_INICIAL; /*PARA PRIMEIRA CARGA INSERE-SE VALORES PADRÕES PARA DATAS INVÁLIDAS E DATAS EM BRANCO (NÃO ENCONTRADA)*/
-    INSERT INTO TD_TEMPO VALUES(-2,'02/01/0001',-2,-2,'DATA INVÁLIDA',-2,'DI',2,'DI',-2,'DI',-2,'DI',-2,'DI',-2,'DI',-2,-2,'DI',-2,'DI',-2);
-    INSERT INTO TD_TEMPO VALUES(-1,'01/01/0001',-1,-1,'NÃO INFORMADO',-1,'NI',1,'NI',-1,'NI',-1,'NI',-1,'NI',-1,'NI',-1,-1,'NI',-1,'NI',-1);
+    DATA_CORRENTE := DATA_INICIAL; /*PARA PRIMEIRA CARGA INSERE-SE VALORES PADRï¿½ES PARA DATAS INVï¿½LIDAS E DATAS EM BRANCO (Nï¿½O ENCONTRADA)*/
+    INSERT INTO TD_TEMPO VALUES(-2,'02/01/0001',-2,-2,'DATA INVï¿½LIDA',-2,'DI',2,'DI',-2,'DI',-2,'DI',-2,'DI',-2,'DI',-2,-2,'DI',-2,'DI',-2);
+    INSERT INTO TD_TEMPO VALUES(-1,'01/01/0001',-1,-1,'Nï¿½O INFORMADO',-1,'NI',1,'NI',-1,'NI',-1,'NI',-1,'NI',-1,'NI',-1,-1,'NI',-1,'NI',-1);
   ELSE
     DATA_CORRENTE := ULTIMA_DATA + 1;
-  END IF; /* CASO ULTIMA_DATA SEJA NULA UTILIZA-SE A DATA_INICIAL SE NÃO USA-SE PROXIMA DATA */
+  END IF; /* CASO ULTIMA_DATA SEJA NULA UTILIZA-SE A DATA_INICIAL SE Nï¿½O USA-SE PROXIMA DATA */
 
   QTD_DIAS := DATA_FINAL - DATA_CORRENTE; --QUANTIDADE DE DIAS A SER INSERIDO
 
@@ -77,12 +77,12 @@ BEGIN
                           END ,                                         -- CO_BIMESTRE
                           CASE
 
-                            WHEN MES_CORRENTE IN (1,2)   THEN '1º BIMESTRE'
-                            WHEN MES_CORRENTE IN (3,4)   THEN '2º BIMESTRE'
-                            WHEN MES_CORRENTE IN (5,6)   THEN '3º BIMESTRE'
-                            WHEN MES_CORRENTE IN (7,8)   THEN '4º BIMESTRE'
-                            WHEN MES_CORRENTE IN (9,10)  THEN '5º BIMESTRE'
-                            WHEN MES_CORRENTE IN (11,12) THEN '6º BIMESTRE'
+                            WHEN MES_CORRENTE IN (1,2)   THEN '1ï¿½ BIMESTRE'
+                            WHEN MES_CORRENTE IN (3,4)   THEN '2ï¿½ BIMESTRE'
+                            WHEN MES_CORRENTE IN (5,6)   THEN '3ï¿½ BIMESTRE'
+                            WHEN MES_CORRENTE IN (7,8)   THEN '4ï¿½ BIMESTRE'
+                            WHEN MES_CORRENTE IN (9,10)  THEN '5ï¿½ BIMESTRE'
+                            WHEN MES_CORRENTE IN (11,12) THEN '6ï¿½ BIMESTRE'
                           END,                                          -- DS_BIMESTRE
                           CASE
                             WHEN MES_CORRENTE IN (1,2,3)    THEN 1
@@ -91,19 +91,19 @@ BEGIN
                             WHEN MES_CORRENTE IN (10,11,12) THEN 4
                           END,                                          -- CO_TRIMESTRE
                           CASE
-                            WHEN MES_CORRENTE IN (1,2,3)    THEN '1º TRIMESTRE'
-                            WHEN MES_CORRENTE IN (4,5,6)    THEN '2º TRIMESTRE'
-                            WHEN MES_CORRENTE IN (7,8,9)    THEN '3º TRIMESTRE'
-                            WHEN MES_CORRENTE IN (10,11,12) THEN '4º TRIMESTRE'
+                            WHEN MES_CORRENTE IN (1,2,3)    THEN '1ï¿½ TRIMESTRE'
+                            WHEN MES_CORRENTE IN (4,5,6)    THEN '2ï¿½ TRIMESTRE'
+                            WHEN MES_CORRENTE IN (7,8,9)    THEN '3ï¿½ TRIMESTRE'
+                            WHEN MES_CORRENTE IN (10,11,12) THEN '4ï¿½ TRIMESTRE'
                           END,                                          -- DS_TRIMESTRE
                           CASE
                             WHEN (MES_CORRENTE = 12 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (1,2)   OR (MES_CORRENTE =  3 AND DIA_CORRENTE < 21) THEN 1
                             WHEN (MES_CORRENTE =  3 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (4,5)   OR (MES_CORRENTE =  6 AND DIA_CORRENTE < 21) THEN 2
                             WHEN (MES_CORRENTE =  6 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (7,8)   OR (MES_CORRENTE =  9 AND DIA_CORRENTE < 21) THEN 3
                             WHEN (MES_CORRENTE =  9 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (10,11) OR (MES_CORRENTE = 12 AND DIA_CORRENTE < 21) THEN 4
-                          END,                                          -- CO_ESTACAO --(ESTAÇÕES DO ANO)
+                          END,                                          -- CO_ESTACAO --(ESTAï¿½ï¿½ES DO ANO)
                           CASE
-                            WHEN (MES_CORRENTE = 12 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (1,2)   OR (MES_CORRENTE =  3 AND DIA_CORRENTE < 21) THEN 'VERÃO'
+                            WHEN (MES_CORRENTE = 12 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (1,2)   OR (MES_CORRENTE =  3 AND DIA_CORRENTE < 21) THEN 'VERï¿½O'
                             WHEN (MES_CORRENTE =  3 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (4,5)   OR (MES_CORRENTE =  6 AND DIA_CORRENTE < 21) THEN 'OUTONO'
                             WHEN (MES_CORRENTE =  6 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (7,8)   OR (MES_CORRENTE =  9 AND DIA_CORRENTE < 21) THEN 'INVERNO'
                             WHEN (MES_CORRENTE =  9 AND DIA_CORRENTE >= 21) OR MES_CORRENTE IN (10,11) OR (MES_CORRENTE = 12 AND DIA_CORRENTE < 21) THEN 'PRIMAVERA'
@@ -113,8 +113,8 @@ BEGIN
                             WHEN MES_CORRENTE IN (7,8,9,10,11,12) THEN 2
                           END,                                          --CO_SEMESTRE
                           CASE
-                            WHEN MES_CORRENTE IN (1,2,3,4,5,6)    THEN '1º SEMESTRE'
-                            WHEN MES_CORRENTE IN (7,8,9,10,11,12) THEN '2º SEMESTRE'
+                            WHEN MES_CORRENTE IN (1,2,3,4,5,6)    THEN '1ï¿½ SEMESTRE'
+                            WHEN MES_CORRENTE IN (7,8,9,10,11,12) THEN '2ï¿½ SEMESTRE'
                           END,                                                        --DS_SEMESTRE
                           TO_NUMBER(TO_CHAR(DATA_CORRENTE,'YYYY')),                  --CO_ANO
                           TO_NUMBER(TO_CHAR(ADD_MONTHS(DATA_CORRENTE,-1),'YYYYMM')), --CO_MES_ANT
@@ -129,7 +129,7 @@ BEGIN
   COMMIT;
 END;
 
-/* --execução
+/* --execuï¿½ï¿½o
  begin
    -- Call the procedure
  proc_carga_tempo(data_inicial => '01/01/1900', data_final => '31/12/2112');
